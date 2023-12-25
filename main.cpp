@@ -27,6 +27,18 @@ public:
         cout << "Book added successfully.\n";
     }
 
+    // Function to delete a book
+    void deleteBook(const string& title) {
+        for (int i = 0; i < books.size(); i++) {
+            if (books[i].title == title) {
+                books.erase(books.begin() + i);
+                cout << "Book deleted successfully.\n";
+                return;
+            }
+        }
+        cout << "Book not found.\n";
+    }
+
     // Function to search for a book by title
     void searchBook(const string& title) {
         for (const Book& book : books) {
@@ -46,7 +58,7 @@ public:
             return;
         }
 
-        cout << "All Books:\n";
+        cout << "\nAll Books:\n";
         for (const Book& book : books) {
             displayBook(book);
         }
@@ -63,13 +75,51 @@ public:
 int main() {
     BookManager bookManager;
 
-    // Example usage
-    bookManager.addBook("The Catcher in the Rye", "J.D. Salinger", 1951);
-    bookManager.addBook("To Kill a Mockingbird", "Harper Lee", 1960);
+    int choice = 1;
+    string title, author;
+    int year;
 
-    bookManager.displayAllBooks();
+    while (choice!=0)
+    {
+        cout << "1. Add Book\n";
+        cout << "2. Delete Book\n";
+        cout << "3. Search Book\n";
+        cout << "4. Display All Books\n";
+        cout << "0. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
 
-    bookManager.searchBook("To Kill a Mockingbird");
-
+        switch (choice)
+        {
+        case 1:
+            cout << "Enter the title of the book" << endl;
+            cin >> title;
+            cout << "Enter the author of the book" << endl;
+            cin >> author;
+            cout << "Enter the year of the book" << endl;
+            cin >> year;
+            bookManager.addBook(title, author, year);
+            break;
+        case 2:
+            cin >> title;
+            bookManager.deleteBook(title);
+            break;
+        case 3:
+            cin >> title;
+            bookManager.searchBook(title);
+            break;
+        case 4:
+            bookManager.displayAllBooks();
+            break;
+        case 0:
+            choice = 0;
+            cout << "Exiting..." << endl;
+            break;
+        default:
+            cout << "Invalid choice" << endl;
+            break;
+        }
+    }
+    
     return 0;
 }
